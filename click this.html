@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>for you</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: url("bg.gif") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+}
+
+.container {
+  position: relative;
+  color: white;
+  text-align: center;
+  max-width: 600px;
+  padding: 25px;
+  z-index: 2;
+}
+
+.tap {
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 0.9;
+  animation: pulse 1.6s infinite;
+}
+
+.letter {
+  display: none;
+  font-size: 20px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  max-height: 55vh;        /* IMPORTANT */
+  overflow-y: auto;        /* SCROLL ENABLED */
+  padding-right: 10px;
+}
+
+.pic {
+  display: none;
+  margin: 25px auto;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255,255,255,0.5);
+}
+
+.button {
+  display: none;
+  margin-top: 25px;
+  padding: 10px 24px;
+  border-radius: 30px;
+  border: none;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+.final {
+  display: none;
+  font-size: 36px;
+  margin-top: 40px;
+  animation: scaleIn 2s forwards;
+}
+
+.final span {
+  display: block;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 0.8; }
+  to { transform: translateY(-110vh); opacity: 0; }
+}
+
+@keyframes scaleIn {
+  from {opacity:0; transform:scale(0.95);}
+  to {opacity:1; transform:scale(1);}
+}
+
+@keyframes pulse {
+  0%,100% {opacity:0.6;}
+  50% {opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+  <div class="tap" id="tap">tap once 🤍</div>
+
+  <img src="her.jpg" class="pic" id="pic">
+
+  <div class="letter" id="letter">
+you are as beautiful as the day I first saw you,
+or maybe yo turning up more beautiful every day  booo
+
+it was your smile that stood out,
+that made me feel like smiling is actually worth it.
+your eyes made mine turn to them,
+you were as bright as the sunset’s sunshine back then.
+
+lwk I didn’t get any sleep that night ,
+kept thinking of ways to meet you.
+I didn’t even know your name,
+just the branch.
+
+I love your voice,
+I lwk fw your dilnasheen voice 
+as warm as komorebi.
+you are my violet in the sun.
+
+I don wana be corny,
+but the word love falls shorter each day with you.
+there’s a lot more than just love that I feel for you.
+as I’ve been saying  and I’ll say it once again 
+“words don’t really describe about you for me.”
+
+you feel like miwu
+
+i can still say more but bleh I ALREADY MISS YOU HAIL NAHH 
+AND IT WAS A RAGEBAIT I DONT EVEN SING WHEN THE MIC ISNT ON HONEY DDDD:
+
+my love aint loud
+its munay < w >
+  </div>
+
+  <button class="button" id="btn">there’s one more thing</button>
+
+  <div class="final" id="final">
+    please stay with me forever
+    <span>🤍</span>
+  </div>
+</div>
+
+<audio id="music" src="song.mp3" loop></audio>
+
+<script>
+const tap = document.getElementById("tap");
+const letter = document.getElementById("letter");
+const btn = document.getElementById("btn");
+const finalText = document.getElementById("final");
+const music = document.getElementById("music");
+const pic = document.getElementById("pic");
+
+const fullText = letter.textContent;  // RAW TEXT
+letter.textContent = "";
+
+let i = 0;
+
+function typeText() {
+  if (i < fullText.length) {
+    letter.textContent += fullText.charAt(i);
+    i++;
+    setTimeout(typeText, 35);
+  } else {
+    btn.style.display = "inline-block";
+  }
+}
+
+tap.onclick = () => {
+  tap.style.display = "none";
+  pic.style.display = "block";
+  letter.style.display = "block";
+
+  music.volume = 0;
+  music.play();
+
+  const fade = setInterval(() => {
+    if (music.volume < 0.3) music.volume += 0.01;
+    else clearInterval(fade);
+  }, 120);
+
+  typeText();
+};
+
+btn.onclick = () => {
+  btn.style.display = "none";
+  finalText.style.display = "block";
+  spawnHearts();
+};
+
+function spawnHearts() {
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "💗";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (16 + Math.random()*20) + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }, 500);
+}
+</script>
+
+</body>
+</html>
